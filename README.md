@@ -1,2 +1,1 @@
-# cobalt-analytics
-Backend analytics for cobalt instances.
+# cobalt backend analytics
