@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    container_name: cobalt-analytics-db
+    environment:
+      MYSQL_ROOT_PASSWORD: cobaltroot
+      MYSQL_DATABASE: cobalt_analytics
+      MYSQL_USER: cobalt-analytics
+      MYSQL_PASSWORD: cobaltanalytics
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build: .
+    restart: unless-stopped
+    container_name: cobalt-analytics-api
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: cobalt_analytics
+      MYSQL_USER: cobalt-analytics
+      MYSQL_PASSWORD: cobaltanalytics
+      PORT: 3010
+    ports:
+      - 3010:3010
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
